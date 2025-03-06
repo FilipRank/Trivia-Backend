@@ -1,7 +1,5 @@
 import 'dotenv/config'
 import express from 'express'
-import Badge from './models/Badge.js'
-// import passport from 'passport'
 import passport from './config/passport.js'
 import dotenv from 'dotenv'
 import connectDB from './config/connectDB.js'
