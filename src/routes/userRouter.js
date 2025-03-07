@@ -8,8 +8,21 @@ router.use((req, res, next) => {
   next()
 })
 
-router.get('/', (req, res) => {
+router.route('/').get((req, res) => {
   res.json({user: req.user})
+})
+.patch(async (req, res) => {
+  try {
+    let user = await User.findById(req.user._id)
+    user = req.body
+    await User.findByIdAndUpdate(req.user._id, user)
+    const updatedUser = await User.findById(req.user._id)
+    res.status(200).json(updatedUser)
+  }
+  catch (err) {
+    console.error(err)
+    res.status(500).json({error: err})
+  }
 })
 
 router.patch('/increase-balance', async (req, res) => {
