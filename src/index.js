@@ -1,5 +1,5 @@
 import 'dotenv/config'
-import express from 'express'
+import express, { json } from 'express'
 import passport from './config/passport.js'
 import dotenv from 'dotenv'
 import connectDB from './config/connectDB.js'
@@ -27,6 +27,8 @@ app.use(passport.initialize())
 app.use(passport.session())
 // Cors
 app.use(corsConfig)
+// Body parsing
+app.use(json())
 // Routes
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
