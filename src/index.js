@@ -8,6 +8,7 @@ import corsConfig from './config/corsConfig.js'
 import authRouter from './routes/authRouter.js'
 import userRouter from './routes/userRouter.js'
 import badgeRouter from './routes/badgeRouter.js'
+import logRequests from './middlewares/logRequests.js'
 
 const app = express()
 const port = 4000
@@ -29,6 +30,8 @@ app.use(passport.session())
 app.use(corsConfig)
 // Body parsing
 app.use(json())
+//Logging
+app.use(logRequests)
 // Routes
 app.use('/auth', authRouter)
 app.use('/user', userRouter)
