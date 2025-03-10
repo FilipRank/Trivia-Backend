@@ -1,5 +1,6 @@
 import express from 'express'
 import User from '../models/User.js'
+import Badge from '../models/Badge.js'
 
 const router = express.Router()
 
@@ -22,6 +23,25 @@ router.route('/').get((req, res) => {
   catch (err) {
     console.error(err)
     res.status(500).json({error: err})
+  }
+})
+
+router.patch('/add-badge', async (req, res) => {
+  try {
+    const badgeId = req.query.id
+    const badge = await Badge.findById(badgeId)
+    if (!badge) return res.status(400).json({error: 'No badge with such id'})
+    const user = await User.findById(req.user._id);
+    if (user.balance < badge.price) return res.status(400).json({error: 'Insufficient funds'})
+    if (user.purchasedBadgesIDs.includes(badgeId)) return res.status(400).json({error: 'User already has this badge'})
+    user.balance -= badge.price
+    user.purchasedBadgesIDs.push(badgeId)
+    user.save()
+    return res.status(200).json({user: user})
+  }
+  catch (err) {
+    res.status(500).json({error: err})
+    console.error(err)
   }
 })
 
