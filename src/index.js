@@ -21,13 +21,13 @@ connectDB()
 // Middleware
 // Serves the images
 app.use(express.static('public'))
+// Cors
+app.use(corsConfig)
 // For sessions
 app.use(sessionConfig)
 // Passport
 app.use(passport.initialize())
 app.use(passport.session())
-// Cors
-app.use(corsConfig)
 // Body parsing
 app.use(json())
 //Logging

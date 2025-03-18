@@ -2,7 +2,7 @@ import express from 'express'
 import passport from 'passport'
 import dotenv from 'dotenv'
 
-dotenv.config
+dotenv.config()
 
 const router = express.Router()
 
@@ -14,5 +14,20 @@ router.get('/github/callback',
     res.redirect(`${process.env.FRONTEND_URL}`)
   }
 )
+
+router.post('/logout', (req, res, next) => {
+  req.logout(function(err) {
+    if (err) return next(err)
+
+      req.session.destroy((err) => {
+        if (err) return next(err)
+
+        res.clearCookie('connect.sid')
+        res.status(200).json({
+          message: "Logged out",
+        });
+      })
+  })
+})
 
 export default router
