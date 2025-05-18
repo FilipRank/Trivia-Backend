@@ -1,8 +1,11 @@
 import cors from 'cors'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const corsConfig = cors({
-  origin: "http://localhost:5173",
-  credentials: true
-})
+  origin: process.env.BACKEND_URL,
+  credentials: true,
+});
 
 export default corsConfig
