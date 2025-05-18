@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 const corsConfig = cors({
-  origin: process.env.BACKEND_URL,
+  origin: process.env.FRONTEND_URL,
   credentials: true,
 });
 
